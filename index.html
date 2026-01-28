@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Criterion 6 – Faculty Contribution</title>
+
+<style>
+body { font-family: Arial, sans-serif; margin: 20px; background: #f7f7f7; }
+h1, h2 { color: #2c3e50; }
+section { background: #fff; padding: 20px; margin-bottom: 20px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+label { display: block; margin-top: 10px; font-weight: bold; }
+input, select, textarea, button { width: 100%; padding: 8px; margin-top: 5px; }
+textarea { resize: vertical; }
+.row { display: grid; grid-template-columns: repeat(auto-fit,minmax(180px,1fr)); gap: 10px; }
+.repeat-group { border: 1px dashed #ccc; padding: 10px; margin-top: 10px; }
+.add-btn { background: #3498db; color: white; border: none; cursor: pointer; margin-top: 10px; }
+.remove-btn { background: #e74c3c; color: white; border: none; cursor: pointer; }
+.submit-btn { background: #2ecc71; color: white; font-size: 16px; border: none; cursor: pointer; }
+.info-box { background:#eef6ff; border-left:4px solid #3498db; padding:10px; }
+
+/* Spinner Modal */
+.spinner-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+.spinner-box {
+  background: #fff;
+  padding: 30px 40px;
+  border-radius: 8px;
+  text-align: center;
+}
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #ddd;
+  border-top: 5px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 15px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+
+<body>
+
+<!-- Spinner -->
+<div id="spinnerModal" class="spinner-modal">
+  <div class="spinner-box">
+    <div class="spinner"></div>
+    <p>Submitting… Please wait</p>
+  </div>
+</div>
+
+<h1>Criterion 6 – Faculty Contribution</h1>
+
+<form id="criterion6Form">
+
+<section style="display:none">
+  <div class="info-box">
+    <strong>Your Submission ID:</strong>
+    <span id="submissionIdDisplay"></span>
+    <input type="hidden" name="submission_id" id="submission_id" />
+  </div>
+</section>
+
+<section>
+<h2>Faculty Basic Details</h2>
+<div class="row">
+  <div><label>Name of Faculty</label><input type="text" name="faculty_name" required></div>
+  <div><label>Email</label><input type="email" name="email" required></div>
+  <div><label>Mobile Number</label><input type="tel" name="mobile" pattern="[0-9]{10}" maxlength=10 required></div>
+  <div>
+    <label>Designation</label>
+    <select name="designation">
+      <option>Assistant Professor</option>
+      <option>Associate Professor</option>
+      <option>Professor</option>
+    </select>
+  </div>
+</div>
+</section>
+
+<section>
+<h2>6.1.1 Professional Society Memberships</h2>
+<div id="membershipContainer"></div>
+<button type="button" class="add-btn" onclick="addMembership()">+ Add Membership</button>
+</section>
+
+<section>
+<h2>6.1.2 Faculty as Resource Person (STTP/FDP)</h2>
+<div id="resourceContainer"></div>
+<button type="button" class="add-btn" onclick="addResource()">+ Add STTP/FDP</button>
+</section>
+
+<section>
+<h2>6.1.3 Participation in STTP/FDP</h2>
+<div id="participationContainer"></div>
+<button type="button" class="add-btn" onclick="addParticipation()">+ Add Participation</button>
+</section>
+
+<section>
+<h2>6.1.4 MOOC Certifications</h2>
+<div id="moocContainer"></div>
+<button type="button" class="add-btn" onclick="addMOOC()">+ Add MOOC</button>
+</section>
+
+<section>
+<h2>6.1.5 Student Innovation Projects</h2>
+<div id="innovationContainer"></div>
+<button type="button" class="add-btn" onclick="addInnovation()">+ Add Project</button>
+</section>
+
+<section>
+<h2>6.2.1 Academic Research Publications (AY-wise)</h2>
+<div id="publicationContainer"></div>
+<button type="button" class="add-btn" onclick="addPublication()">+ Add Publication</button>
+</section>
+
+<section>
+<h2>6.2.2 Development Activities</h2>
+<div class="row">
+  <div>
+	  <label>
+	  Provide details of patents granted/published, working models, and prototypes developed in the last 3 years.
+	  </label>
+	  <textarea name="dev_activities"></textarea>
+  </div>
+</div>
+</section>
+
+<section>
+<h2>6.2.3 Sponsored Research Projects</h2>
+<div id="researchContainer"></div>
+<button type="button" class="add-btn" onclick="addResearch()">+ Add Sponsored Project</button>
+</section>
+
+<section>
+<h2>6.2.4 Consultancy Projects</h2>
+<div id="consultancyContainer"></div>
+<button type="button" class="add-btn" onclick="addConsultancy()">+ Add Consultancy</button>
+</section>
+
+<section>
+<h2>6.2.5 Seed Money / Internal Research Grant</h2>
+<div id="seedContainer"></div>
+<button type="button" class="add-btn" onclick="addSeed()">+ Add Seed Grant</button>
+</section>
+
+<section>
+<h2>Supporting Documents Upload</h2>
+<a href="https://YOUR_GOOGLE_FORM_UPLOAD_LINK" target="_blank">Upload supporting documents</a>
+</section>
+
+<section>
+<label style="font-weight:normal">
+<input type="checkbox" required> I have uploaded the supporting documents using the above link.
+</label><br><br>
+<button type="submit" class="submit-btn">Submit Data</button>
+</section>
+
+</form>
+
+<script>
+const endpoint = "https://script.google.com/macros/s/AKfycbyjV7bFSG22Oa6MGkkc-QEWdB7-19wLc47RoMm57cdgWiPxZYtY8JBiItmluypc8QTL/exec";
+
+/* Spinner */
+function showSpinner(){ spinnerModal.style.display='flex'; }
+function hideSpinner(){ spinnerModal.style.display='none'; }
+
+/* Submission ID */
+function generateSubmissionId(){
+ const d=new Date();
+ return `C6-${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}-${Math.floor(1000+Math.random()*9000)}`;
+}
+const sid = generateSubmissionId();
+submissionIdDisplay.innerText = sid;
+submission_id.value = sid;
+
+/* Repeater creators (UNCHANGED) */
+function createBlock(fields, withAY){
+ const div=document.createElement('div'); div.className='repeat-group';
+ if(withAY){
+  const l=document.createElement('label'); l.innerText='Academic Year';
+  const s=document.createElement('select'); s.name='academic_year[]';
+  ['AY 2025-26','AY 2024-25','AY 2023-24'].forEach(v=>{
+    const o=document.createElement('option'); o.value=v; o.innerText=v; s.appendChild(o);
+  });
+  div.appendChild(l); div.appendChild(s);
+ }
+ fields.forEach(f=>{
+  const l=document.createElement('label'); l.innerText=f.label;
+  const i=document.createElement('input'); i.name=f.name;
+  div.appendChild(l); div.appendChild(i);
+ });
+ const b=document.createElement('button');
+ b.type='button'; b.className='remove-btn'; b.innerText='Remove'; b.onclick=()=>div.remove();
+ div.appendChild(b); return div;
+}
+
+/* Add functions */
+function addMembership(){membershipContainer.appendChild(createBlock([{label:'Professional Society',name:'society[]'},{label:'National / International',name:'level[]'},{label:'Grade / Position',name:'position[]'}],false));}
+function addResource(){resourceContainer.appendChild(createBlock([{label:'Program Name',name:'program[]'},{label:'Date',name:'date[]'},{label:'Location',name:'location[]'},{label:'Organized By',name:'organized_by[]'}],true));}
+function addParticipation(){participationContainer.appendChild(createBlock([{label:'Program Name',name:'part_program[]'},{label:'Duration (days)',name:'duration[]'}],true));}
+function addMOOC(){moocContainer.appendChild(createBlock([{label:'Course Name',name:'course[]'},{label:'Platform',name:'platform[]'},{label:'Grade',name:'grade[]'}],true));}
+function addInnovation(){innovationContainer.appendChild(createBlock([{label:'Project/Event Name',name:'innovation[]'},{label:'Date',name:'innovation_date[]'},{label:'Link',name:'innovation_link[]'}],true));}
+function addPublication(){publicationContainer.appendChild(createBlock([{label:'Publication Type (journal/conference/book/book chapter)',name:'pub_type[]'},{label:'Title',name:'pub_title[]'},{label:'Authors',name:'pub_authors[]'},{label:'Journal / Publisher',name:'pub_venue[]'}],true));}
+function addResearch(){researchContainer.appendChild(createBlock([{label:'Project Title',name:'project_title[]'},{label:'Principal Investigator (PI)',name:'pi_name[]'},{label:'Co-PI(s)',name:'copi_names[]'},{label:'Funding Agency',name:'agency[]'},{label:'Amount (Lacs)',name:'amount[]'},{label:'Duration',name:'proj_duration[]'}],true));}
+function addConsultancy(){consultancyContainer.appendChild(createBlock([{label:'Project Title',name:'consultancy_title[]'},{label:'Principal Investigator (PI)',name:'consultancy_pi[]'},{label:'Co-PI(s)',name:'consultancy_copi[]'},{label:'Client / Agency',name:'consultancy_agency[]'},{label:'Amount (Lacs)',name:'consultancy_amount[]'},{label:'Duration',name:'consultancy_duration[]'}],true));}
+function addSeed(){seedContainer.appendChild(createBlock([{label:'Project Title',name:'seed_title[]'},{label:'Amount Received (Lacs)',name:'seed_amount[]'},{label:'Amount Utilized (Lacs)',name:'seed_utilized[]'},{label:'Outcomes',name:'seed_outcome[]'}],true));}
+
+/* SUBMIT – STRUCTURED JSON */
+criterion6Form.addEventListener('submit', async e=>{
+ e.preventDefault(); showSpinner();
+
+ const data={};
+ document.querySelectorAll(
+	  'input:not([name$="[]"]), select:not([name$="[]"]), textarea:not([name$="[]"])'
+	)
+  .forEach(el=>el.name&&(data[el.name]=el.value));
+
+ const map={
+  membershipContainer:'memberships',
+  resourceContainer:'resources',
+  participationContainer:'participations',
+  moocContainer:'moocs',
+  innovationContainer:'innovations',
+  publicationContainer:'publications',
+  devActivities:'dev_activities',
+  researchContainer:'research_projects',
+  consultancyContainer:'consultancies',
+  seedContainer:'seed_grants'
+ };
+
+ Object.entries(map).forEach(([id,key])=>{
+  const c=document.getElementById(id); if(!c) return;
+  data[key]=[];
+  c.querySelectorAll('.repeat-group').forEach(row=>{
+    const o={};
+    row.querySelectorAll('input,select').forEach(f=>o[f.name.replace('[]','')]=f.value);
+    data[key].push(o);
+  });
+ });
+
+  try {
+    await fetch(endpoint, {
+      method: 'POST',
+      mode: 'no-cors',
+      body: JSON.stringify(data)
+    });
+
+    // ✅ If we reach here, submission worked
+    hideSpinner();
+    alert(`Submitted successfully.\nSubmission ID: ${data.submission_id}`);
+    window.location.reload();
+
+  } catch (err) {
+    hideSpinner();
+    alert('Submission failed due to network error.');
+    console.error(err);
+  }
+});
+</script>
+
+</body>
+</html>
