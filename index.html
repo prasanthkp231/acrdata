@@ -156,10 +156,10 @@ textarea { resize: vertical; }
 <button type="button" class="add-btn" onclick="addSeed()">+ Add Seed Grant</button>
 </section>
 
-<section>
+<!--<section>
 <h2>Supporting Documents Upload</h2>
 <a href="https://docs.google.com/forms/d/e/1FAIpQLScgJkGfw64x_xn_vg9-rocDeWbkJQEYVqSSNKLR-9QeaU_5ew/viewform?usp=publish-editor" target="_blank">Upload supporting documents</a>
-</section>
+</section>-->
 
 <section>
 <label style="font-weight:normal">
@@ -260,8 +260,8 @@ criterion6Form.addEventListener('submit', async e=>{
 
     // ✅ If we reach here, submission worked
     hideSpinner();
-    alert(`Submitted successfully.\nSubmission ID: ${data.submission_id}`);
-    window.location.reload();
+    alert(`Please upload the supporting documents in the next window.`);
+    window.location.href = "https://docs.google.com/forms/d/e/1FAIpQLScgJkGfw64x_xn_vg9-rocDeWbkJQEYVqSSNKLR-9QeaU_5ew/viewform?usp=publish-editor";
 
   } catch (err) {
     hideSpinner();
