@@ -97,7 +97,7 @@ textarea { resize: vertical; }
 </section>
 
 <section>
-<h2>6.1.2 Faculty as Resource Person (STTP/FDP)</h2>
+<h2>6.1.2 Faculty as Resource Persons in STTP/FDP</h2>
 <div id="resourceContainer"></div>
 <button type="button" class="add-btn" onclick="addResource()">+ Add STTP/FDP</button>
 </section>
@@ -109,7 +109,7 @@ textarea { resize: vertical; }
 </section>
 
 <section>
-<h2>6.1.4 MOOC Certifications</h2>
+<h2>6.1.4 MOOC courses attended by Faculty</h2>
 <div id="moocContainer"></div>
 <button type="button" class="add-btn" onclick="addMOOC()">+ Add MOOC</button>
 </section>
@@ -120,6 +120,12 @@ textarea { resize: vertical; }
 <button type="button" class="add-btn" onclick="addInnovation()">+ Add Project</button>
 </section>
 
+<section>
+<h2>6.1.6 Faculty Internship/Training/Collaboration with Industry</h2>
+<div id="industryContainer"></div>
+<button type="button" class="add-btn" onclick="addIndustry()">+ Add Industry Collaboration</button>
+</section>
+	
 <section>
 <h2>6.2.1 Academic Research Publications (AY-wise)</h2>
 <div id="publicationContainer"></div>
@@ -145,13 +151,13 @@ textarea { resize: vertical; }
 </section>
 
 <section>
-<h2>6.2.4 Consultancy Projects</h2>
+<h2>6.2.4 Consultancy Works</h2>
 <div id="consultancyContainer"></div>
 <button type="button" class="add-btn" onclick="addConsultancy()">+ Add Consultancy</button>
 </section>
 
 <section>
-<h2>6.2.5 Seed Money / Internal Research Grant</h2>
+<h2>6.2.5 Institution Seed Money or Internal Research Grant to its Faculty for Research Work</h2>
 <div id="seedContainer"></div>
 <button type="button" class="add-btn" onclick="addSeed()">+ Add Seed Grant</button>
 </section>
@@ -213,6 +219,7 @@ function addResource(){resourceContainer.appendChild(createBlock([{label:'Progra
 function addParticipation(){participationContainer.appendChild(createBlock([{label:'Program Name',name:'part_program[]'},{label:'Duration (days)',name:'duration[]'}],true));}
 function addMOOC(){moocContainer.appendChild(createBlock([{label:'Course Name',name:'course[]'},{label:'Platform',name:'platform[]'},{label:'Grade',name:'grade[]'}],true));}
 function addInnovation(){innovationContainer.appendChild(createBlock([{label:'Project/Event Name',name:'innovation[]'},{label:'Date',name:'innovation_date[]'},{label:'Link',name:'innovation_link[]'}],true));}
+function addIndustry(){industryContainer.appendChild(createBlock([{label:'Name	of	the Internship/Training/ Collaboration',name:'industry[]'},{label:'Name of the company & place',name:'company[]'},{label:'Duration',name:'duration[]'},{label:'Outcomes	of Internship/Training/ Collaboration',name:'outcome[]'}],true));}
 function addPublication(){publicationContainer.appendChild(createBlock([{label:'Publication Type (journal/conference/book/book chapter)',name:'pub_type[]'},{label:'Title',name:'pub_title[]'},{label:'Authors',name:'pub_authors[]'},{label:'Journal / Publisher',name:'pub_venue[]'}],true));}
 function addResearch(){researchContainer.appendChild(createBlock([{label:'Project Title',name:'project_title[]'},{label:'Principal Investigator (PI)',name:'pi_name[]'},{label:'Co-PI(s)',name:'copi_names[]'},{label:'Funding Agency',name:'agency[]'},{label:'Amount (Lacs)',name:'amount[]'},{label:'Duration',name:'proj_duration[]'}],true));}
 function addConsultancy(){consultancyContainer.appendChild(createBlock([{label:'Project Title',name:'consultancy_title[]'},{label:'Principal Investigator (PI)',name:'consultancy_pi[]'},{label:'Co-PI(s)',name:'consultancy_copi[]'},{label:'Client / Agency',name:'consultancy_agency[]'},{label:'Amount (Lacs)',name:'consultancy_amount[]'},{label:'Duration',name:'consultancy_duration[]'}],true));}
@@ -234,6 +241,7 @@ criterion6Form.addEventListener('submit', async e=>{
   participationContainer:'participations',
   moocContainer:'moocs',
   innovationContainer:'innovations',
+  industryContainer:'industries',
   publicationContainer:'publications',
   devActivities:'dev_activities',
   researchContainer:'research_projects',
